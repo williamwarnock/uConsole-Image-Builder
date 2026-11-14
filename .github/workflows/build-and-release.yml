@@ -55,13 +55,16 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: recursive
-
+      
       - name: Checkout kernel source
         if: env.KERNEL_MODE == 'build'
         run: |
+          set -euxo pipefail
           cd linux
-          git fetch origin
-          git checkout ${{ env.KERNEL_BRANCH }}
+          git fetch --depth=1 origin \
+            "refs/heads/${KERNEL_BRANCH}"
+          git checkout --detach FETCH_HEAD
+          git log -1 --oneline
           
       - name: Build kernel
         if: env.KERNEL_MODE == 'build'
