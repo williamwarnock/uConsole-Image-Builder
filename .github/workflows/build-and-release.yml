@@ -141,10 +141,11 @@ jobs:
     permissions:
       contents: read
     strategy:
+      fail-fast: false
       matrix:
-        distro: [trixie, jammy]
+        distro: [jammy]
         uconsole_core: [all]
-        desktop: [gnome, kde, cinnamon, mate, xfce, lxde, lxqt, gnome-flashback]
+        desktop: [gnome]
     outputs:
       image: ${{ matrix.distro }}
       kernel_arch: ${{ env.KERNEL_ARCH }}      
